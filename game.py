@@ -43,6 +43,8 @@ class Game:
 
     def play(self):
         self.sound.play_bg()
+        clock = pg.time.Clock()
+        fps = 60
         while True:     # at the moment, only exits in gf.check_events if Ctrl/Cmd-Q pressed
             gf.check_events(settings=self.settings, ship=self.ship)
             self.screen.fill(self.settings.bg_color)
@@ -51,6 +53,7 @@ class Game:
             self.lasers.update()
             self.scoreboard.update()
             pg.display.flip()
+            clock.tick(fps)
 
 
 def main():

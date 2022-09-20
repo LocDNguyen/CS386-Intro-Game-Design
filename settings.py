@@ -7,14 +7,14 @@ class Settings():
         self.screen_width = 1200
         self.screen_height = 800
         self.bg_color = (150, 150, 150)
-        
+
 # # TODO: test laser with a really wide laser
         self.laser_width = 5
         self.laser_height = 30
         self.laser_color = 255, 0, 0
-        self.lasers_every = 1
+        self.lasers_every = 50
 
-        self.alien_points = 50
+        self.alien_points = 1
 
 # # TODO: set a ship_limit of 3
         self.ship_limit = 3         # total ships allowed in game before game over
@@ -24,9 +24,9 @@ class Settings():
         self.initialize_speed_settings()
 
     def initialize_speed_settings(self):
-        self.alien_speed_factor = 1
-        self.ship_speed_factor = 3
-        self.laser_speed_factor = 3
+        self.alien_speed_factor = 0.1
+        self.ship_speed_factor = 2
+        self.laser_speed_factor = 2
 
     def increase_speed(self):
         scale = self.speedup_scale
