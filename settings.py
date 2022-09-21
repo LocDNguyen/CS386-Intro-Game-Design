@@ -12,7 +12,7 @@ class Settings():
         self.laser_width = 5
         self.laser_height = 30
         self.laser_color = 255, 0, 0
-        self.lasers_every = 50
+        self.lasers_every = 1
 
         self.alien_points = 1
 
@@ -26,7 +26,7 @@ class Settings():
     def initialize_speed_settings(self):
         self.alien_speed_factor = 0.1
         self.ship_speed_factor = 2
-        self.laser_speed_factor = 2
+        self.laser_speed_factor = 4
 
     def increase_speed(self):
         scale = self.speedup_scale

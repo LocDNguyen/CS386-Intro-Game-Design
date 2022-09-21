@@ -6,15 +6,16 @@ from timer import Timer
 
 class Alien(Sprite):
     alien_images = [pg.image.load(f'images/blue_alien{n}.png') for n in range(2)]
-    #alien_images1 = [pg.image.load(f'images/alien{n}.bmp') for n in range(2)]
-    #alien_images2 = [pg.image.load(f'images/alien{n}.bmp') for n in range(2)]
-    #alien_images3 = [pg.image.load(f'images/alien{n}.bmp') for n in range(2)]
+    alien_images1 = [pg.image.load(f'images/green_alien{n}.png') for n in range(2)]
+    alien_images2= [pg.image.load(f'images/pink_alien{n}.png') for n in range(2)]
+    #alien_images3 = [pg.image.load(f'images/red_alien{n}.png') for n in range(2)]
     alien_explosion_images = [pg.image.load(f'images/explode{n}.png') for n in range(7)]
 
-    def __init__(self, settings, screen):#add type of alien
+    def __init__(self, settings, screen, type):#add type of alien
         super().__init__()
         self.screen = screen
         self.settings = settings
+        self.type = type
         self.image = pg.image.load('images/blue_alien0.png')
         #self.image = pg.transform.scale(self.image, (64, 64))
         self.rect = self.image.get_rect()
@@ -23,10 +24,18 @@ class Alien(Sprite):
 
         #add if statements for which aliens
         self.dying = self.dead = False
-        self.timer_normal = Timer(image_list=self.alien_images)
-        self.timer_explosion = Timer(image_list=self.alien_explosion_images, is_loop=False)
-        self.timer = self.timer_normal
-
+        if self.type == 'blue':
+            self.timer_normal = Timer(image_list=self.alien_images)
+            self.timer_explosion = Timer(image_list=self.alien_explosion_images, is_loop=False)
+            self.timer = self.timer_normal
+        elif self.type == 'green':
+            self.timer_normal = Timer(image_list=self.alien_images1)
+            self.timer_explosion = Timer(image_list=self.alien_explosion_images, is_loop=False)
+            self.timer = self.timer_normal
+        else:
+            self.timer_normal = Timer(image_list=self.alien_images2)
+            self.timer_explosion = Timer(image_list=self.alien_explosion_images, is_loop=False)
+            self.timer = self.timer_normal
     def check_edges(self):
         screen_rect = self.screen.get_rect()
         return self.rect.right >= screen_rect.right or self.rect.left <= 0
@@ -52,8 +61,8 @@ class Alien(Sprite):
 
 
 class Aliens:
-    def __init__(self, game, screen, settings, lasers: Lasers, ship):
-        self.model_alien = Alien(settings=settings, screen=screen)
+    def __init__(self, game, screen, settings, lasers: Lasers, ship, type=None):
+        self.model_alien = Alien(settings=settings, screen=screen, type=type)
         self.game = game
         self.sb = game.scoreboard
         self.aliens = Group()
@@ -61,6 +70,7 @@ class Aliens:
         self.screen = screen
         self.settings = settings
         self.ship = ship
+        self.type = type
         self.create_fleet()
     def get_number_aliens_x(self, alien_width):
         available_space_x = self.settings.screen_width - 6 * alien_width
@@ -73,8 +83,8 @@ class Aliens:
     def reset(self):
         self.aliens.empty()
         self.create_fleet()
-    def create_alien(self, alien_number, row_number):
-        alien = Alien(settings=self.settings, screen=self.screen)
+    def create_alien(self, alien_number, row_number, type):
+        alien = Alien(settings=self.settings, screen=self.screen, type=type)
         alien_width = alien.rect.width
 
         alien.x = alien_width + 1.5 * alien_width * alien_number
@@ -86,7 +96,12 @@ class Aliens:
         number_rows = self.get_number_rows(self.ship.rect.height, self.model_alien.rect.height)
         for row_number in range(number_rows):
             for alien_number in range(number_aliens_x):
-                   self.create_alien(alien_number, row_number)
+                if row_number <= 1:
+                    self.create_alien(alien_number, row_number, 'blue')
+                elif row_number == 2:
+                    self.create_alien(alien_number, row_number, 'green')
+                else:
+                    self.create_alien(alien_number, row_number, 'pink')
     def check_fleet_edges(self):
         for alien in self.aliens.sprites():
             if alien.check_edges():
