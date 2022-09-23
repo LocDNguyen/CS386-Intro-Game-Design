@@ -5,18 +5,20 @@ from timer import Timer
 
 
 class Alien(Sprite):
-    alien_images = [pg.image.load(f'images/blue_alien{n}.png') for n in range(2)]
-    alien_images1 = [pg.image.load(f'images/green_alien{n}.png') for n in range(2)]
-    alien_images2= [pg.image.load(f'images/pink_alien{n}.png') for n in range(2)]
+    alien_images = [pg.image.load(f'images/blue/blue_alien{n}.png') for n in range(2)]
+    alien_images1 = [pg.image.load(f'images/green/green_alien{n}.png') for n in range(2)]
+    alien_images2= [pg.image.load(f'images/pink/pink_alien{n}.png') for n in range(2)]
     #alien_images3 = [pg.image.load(f'images/red_alien{n}.png') for n in range(2)]
-    alien_explosion_images = [pg.image.load(f'images/explode{n}.png') for n in range(7)]
+    alien_explosion_images = [pg.image.load(f'images/blue/explode{n}.png') for n in range(11)]
+    alien_explosion_images1 = [pg.image.load(f'images/green/explode{n}.png') for n in range(11)]
+    alien_explosion_images2 = [pg.image.load(f'images/pink/explode{n}.png') for n in range(11)]
 
     def __init__(self, settings, screen, type):#add type of alien
         super().__init__()
         self.screen = screen
         self.settings = settings
         self.type = type
-        self.image = pg.image.load('images/blue_alien0.png')
+        self.image = pg.image.load('images/blue/blue_alien0.png')
         #self.image = pg.transform.scale(self.image, (64, 64))
         self.rect = self.image.get_rect()
         self.rect.y = self.rect.height
@@ -25,16 +27,16 @@ class Alien(Sprite):
         #add if statements for which aliens
         self.dying = self.dead = False
         if self.type == 'blue':
-            self.timer_normal = Timer(image_list=self.alien_images)
+            self.timer_normal = Timer(image_list=self.alien_images, delay=500)
             self.timer_explosion = Timer(image_list=self.alien_explosion_images, is_loop=False)
             self.timer = self.timer_normal
         elif self.type == 'green':
-            self.timer_normal = Timer(image_list=self.alien_images1)
-            self.timer_explosion = Timer(image_list=self.alien_explosion_images, is_loop=False)
+            self.timer_normal = Timer(image_list=self.alien_images1, delay=500)
+            self.timer_explosion = Timer(image_list=self.alien_explosion_images1, is_loop=False)
             self.timer = self.timer_normal
         else:
-            self.timer_normal = Timer(image_list=self.alien_images2)
-            self.timer_explosion = Timer(image_list=self.alien_explosion_images, is_loop=False)
+            self.timer_normal = Timer(image_list=self.alien_images2, delay=500)
+            self.timer_explosion = Timer(image_list=self.alien_explosion_images2, is_loop=False)
             self.timer = self.timer_normal
     def check_edges(self):
         screen_rect = self.screen.get_rect()

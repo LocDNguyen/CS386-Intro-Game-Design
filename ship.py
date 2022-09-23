@@ -12,8 +12,8 @@ class Ship(Sprite):
         self.screen = screen
         self.settings = settings
         self.sound = sound
-        self.ships_left = settings.ship_limit  
-        self.image = pg.image.load('images/ship.bmp')
+        self.ships_left = settings.ship_limit
+        self.image = pg.image.load('images/ship.png')
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
         self.posn = self.center_ship()    # posn is the centerx, bottom of the rect, not left, top
@@ -25,12 +25,12 @@ class Ship(Sprite):
         self.rect.centerx = self.screen_rect.centerx
         self.rect.bottom = self.screen_rect.bottom
         return Vector(self.rect.left, self.rect.top)
-    def reset(self): 
+    def reset(self):
         self.vel = Vector()
         self.posn = self.center_ship()
         self.rect.left, self.rect.top = self.posn.x, self.posn.y
     def die(self):
-# # TODO: reduce the ships_left, 
+# # TODO: reduce the ships_left,
 # #       reset the game if ships > 0
 # #       game_over if the ships == 0
         self.ships_left -= 1
@@ -45,5 +45,5 @@ class Ship(Sprite):
                 self.lasers.shoot(settings=self.settings, screen=self.screen,
                                 ship=self, sound=self.sound)
         self.draw()
-    def draw(self): 
+    def draw(self):
         self.screen.blit(self.image, self.rect)
