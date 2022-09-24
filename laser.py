@@ -7,7 +7,7 @@ class Lasers:
         self.lasers = Group()
         self.settings = settings
     def reset(self):
-        self.lasers.empty()        
+        self.lasers.empty()
     def shoot(self, settings, screen, ship, sound):
         self.lasers.add(Laser(settings=settings, screen=screen, ship=ship, sound=sound))
     def update(self):
@@ -22,7 +22,9 @@ class Laser(Sprite):
     def __init__(self, settings, screen, ship, sound):
         super().__init__()
         self.screen = screen
-        self.rect = pg.Rect(0, 0, settings.laser_width, settings.laser_height)
+        self.image = pg.image.load('images/blue/blue_alien0.png')
+        self.rect = self.image.get_rect()
+        #self.rect = pg.Rect(0, 0, settings.laser_width, settings.laser_height)
         self.rect.centerx = ship.rect.centerx
         self.rect.bottom = ship.rect.top
         self.y = float(self.rect.y)
@@ -34,4 +36,4 @@ class Laser(Sprite):
         self.rect.y = self.y
         self.draw()
     def draw(self):
-        pg.draw.rect(self.screen, self.color, self.rect)
+        self.screen.blit(self.image, self.rect)

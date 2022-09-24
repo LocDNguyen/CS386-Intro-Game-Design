@@ -19,14 +19,14 @@ class Settings():
 # # TODO: set a ship_limit of 3
         self.ship_limit = 3         # total ships allowed in game before game over
 
-        self.fleet_drop_speed = 3
+        self.fleet_drop_speed = 2
         self.fleet_direction = 1     # change to a Vector(1, 0) move to the right, and ...
         self.initialize_speed_settings()
 
     def initialize_speed_settings(self):
-        self.alien_speed_factor = 0.5
+        self.alien_speed_factor = 0.1
         self.ship_speed_factor = 2
-        self.laser_speed_factor = 4
+        self.laser_speed_factor = 2
 
     def increase_speed(self):
         scale = self.speedup_scale

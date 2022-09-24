@@ -20,7 +20,10 @@ class Ship(Sprite):
         self.vel = Vector()
         self.lasers = lasers
         self.shooting = False
-        self.lasers_attempted = 0
+        # self.lasers_attempted = 0
+
+        self.last_shot = pg.time.get_ticks()
+        self.cooldown = 500
     def center_ship(self):
         self.rect.centerx = self.screen_rect.centerx
         self.rect.bottom = self.screen_rect.bottom
@@ -39,11 +42,19 @@ class Ship(Sprite):
     def update(self):
         self.posn += self.vel
         self.posn, self.rect = clamp(self.posn, self.rect, self.settings)
-        if self.shooting:
-            self.lasers_attempted += 1
-            if self.lasers_attempted % self.settings.lasers_every == 0:
-                self.lasers.shoot(settings=self.settings, screen=self.screen,
-                                ship=self, sound=self.sound)
+        # if self.shooting:
+        #     self.lasers_attempted += 1
+        #     if self.lasers_attempted % self.settings.lasers_every == 0:
+        #         self.lasers.shoot(settings=self.settings, screen=self.screen,
+        #                         ship=self, sound=self.sound)
+
+        time_now = pg.time.get_ticks()
+        key = pg.key.get_pressed()
+        if key[pg.K_SPACE] and time_now - self.last_shot > self.cooldown:
+            self.lasers.shoot(settings=self.settings, screen=self.screen,
+                            ship=self, sound=self.sound)
+            self.last_shot = pg.time.get_ticks()
+            
         self.draw()
     def draw(self):
         self.screen.blit(self.image, self.rect)
