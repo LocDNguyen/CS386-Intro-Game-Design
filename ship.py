@@ -23,7 +23,7 @@ class Ship(Sprite):
         # self.lasers_attempted = 0
 
         self.last_shot = pg.time.get_ticks()
-        self.cooldown = 500
+        self.cooldown = 1000
 
         self.speed = 2
     def center_ship(self):
